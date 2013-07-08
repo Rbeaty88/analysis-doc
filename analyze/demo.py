@@ -21,7 +21,7 @@ class Demo(analysis_base.AnalysisBase):
 
     def text(self):
         """Some text
-        Yes!
+        Yes! Some more text.
         """
     def all_plots(self):
         self.runfigures([self.plot_1,self.text,])
