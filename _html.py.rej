@@ -1,0 +1,7 @@
+diff a/_html.py b/_html.py	(rejected hunks)
+@@ -1,4 +1,5 @@
+ """
++#aaa
+ Manage the Web page generation
+ $Header:$
+ """
