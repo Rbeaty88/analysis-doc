@@ -1,48 +1,62 @@
-Made working hyperlinks, and a small table.
-Test to make sure this works
+<!DOCTYPE html>
 
-<html> <head> <title>test_plotting index</title> 
-<style type="text/css">
-body, th, td {	font-family:verdana,arial,sans-serif;
-	font-size:10pt;
-	margin:10px;
-	background-color:white;
-	}
-p   { font-size:10pt; margin-left:25pt; }
-pre { font-size:10pt; margin-left:25pt; 
-    border-style:solid;
-    border-width:thin;}
-h3 { -webkit-margin-after: 0px; -webkit-margin-before: 2em; }
+<html>
+<head>
+<script type="text/javascript" src="needed\simpletreemenu.js">
 
-h5 {margin-left:25pt;}
-table { margin-left:25pt; margin-top:15pt; font-size:8pt;
-    border-style: solid; border-width: 1px;  border-collapse: collapse; }
-table.topmenu {border-style:solid; border-width:0px}
-table, th, td { padding: 3px; }
-td {text-align:center;}
-td.index {text-align:left;}
-a:link { text-decoration: none ; color:green}
-a:hover { background-color:yellow; }
-</style> 
-    <script> function load(){ parent.content.location.href='plots/config/index.html';} </script>
-    </head>
-<body onload="load()">
+/***********************************************
+* Simple Tree Menu- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
 
+</script>
 
+<link rel="stylesheet" type="text/css" href="needed\simpletree.css" />
+
+</head>
+
+<body>
 <h2><a href="../">SkyDrive/</a>test_plotting</h2>
-<h4>plots\config</h4>
-	<p><a href="plots\config\index.html?skipDecoration" target="content">index</a><br>
-<h4>plots\demo</h4>
-	<p><a href="plots\demo\index.html?skipDecoration" target="content">index</a><br>
-	<a href="plots\demo\plot_1_test_plotting.html?skipDecoration" target="content">plot_1_test_plottin</a><br>
-	<a href="plots\demo\text_test_plotting.html?skipDecoration" target="content">text_test_plottin</a><br>
-	<a href="plots\demo\table.html?skipDecoration" target="content">table</a><br>
-	
-	
+
+<a href="javascript:ddtreemenu.flatten('treemenu1', 'expand')">Expand All</a> | <a href="javascript:ddtreemenu.flatten('treemenu1', 'contract')">Contract All</a>
+
+<ul id="treemenu1" class="treeview">
 
 
-<!--not necessary since the file - analysis-doc/test/plots/test does not exist.-->
-<!--<h4>plots\test</h4>
-	<p><a href="plots\test\index.html?skipDecoration" target="content">inde</a><br>
-	<a href="plots\test\plot_1_test_plotting.html?skipDecoration" target="content">plot_1_test_plottin</a><br></p>-->
+<li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">Index</a>
+	<ul>
+	<li><a href="plots\config\index.html?skipDecoration" onclick="TreeMenu.toggle(this)">Index</a></li>
+	</ul>
+</li>
+
+
+
+
+<li>Demo
+	<ul>
+	<li><a href="plots\demo\index.html?skipDecoration">Index</a></li>
+	<li><a href="plots\demo\plot_1_test_plotting.html?skipDecoration">Plot_1_test_plotting</a></li>
+	<li><a href="plots\demo\text_test_plotting.html?skipDecoration">Text_test_plotting</a></li>
+	<li><a href="plots\demo\table.html?skipDecoration">Table</a></li>
+		
+
+	
+		</ul>
+		
+	</li>
+	
+</ul>
+</li>
+
+
+<script type="text/javascript">
+
+//ddtreemenu.createTree(treeid, enablepersist, opt_persist_in_days (default is 1))
+
+ddtreemenu.createTree("treemenu1", true)
+ddtreemenu.createTree("treemenu2", false)
+
+</script>
+
 </body>
