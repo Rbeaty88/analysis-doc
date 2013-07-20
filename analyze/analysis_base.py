@@ -196,8 +196,8 @@ class AnalysisBase(object):
                   os.environ.get('USER',os.environ.get('USERNAME','?'))))
         htmldoc+='\n</body>'
         t = os.getcwd().split(os.path.sep)[-3:]
-        m = '<a href="../index.html?skipDecoration">%s</a>' % t[-1] # model name has uplink
-        r = '<a href="../../../plot_index.html?skipDecoration">%s</a>' % t[-2] # to group of models 
+        m = '<a href="../plot_index.html?skipDecoration">%s</a>' % t[-1] # model name has uplink
+        r = '<a href="../../../analysis-doc?skipDecoration">%s</a>' % t[-2] # to group of models 
         self.header='/'.join([r, m, os.path.split(self.plotfolder)[-1]])
         text= htmldoc
         try:
@@ -208,5 +208,3 @@ class AnalysisBase(object):
             pass # ignore if % in text
         open(os.path.join(self.plotfolder,'index.html'), 'w').write(text)
         print 'saved html doc to %s' %os.path.join(self.plotfolder,'index.html')
-            
-    

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Manage the Web page generation
 $Header:$
@@ -31,9 +32,10 @@ td.index {text-align:left;}
 a:link { text-decoration: none ; color:green}
 a:hover { background-color:yellow; }
 </style>"""
-
+    
     menu_header="""<html> <head> <title>%(model)s index</title> %(style)s 
     <script> function load(){ parent.content.location.href='%(model_summary)s';} </script>
+    
     </head>
 <body onload="load()">
 <h2><a href="%(upper_link)s?skipDecoration">%(upper)s</a>%(model)s</h2>"""
@@ -75,19 +77,21 @@ a:hover { background-color:yellow; }
             else:
                 s += '\n<h4>%s</h4>'% k.split('/')[-1]
             s += '\n\t<p>' + '\n\t'.join(map(parse_item, v)) 
+        
         self.ul = s + '</p>\n</body>'
         self.make_config_link()
         
-    def _repr_html_(self):    return self.ul
+    def _repr_html_(self):    
+        return self.ul
     
     def make_config_link(self):
-        html = """<head>%s</head><body><h2><a href="../index.html?skipDecoration">%s</a> - configuration and analysis history files</h2>
-        """ %( self.style,self.model)
+        html = """<head>%s</head><body><h2><a href="../../plot_index.html">%s</a> - configuration and analysis history files!!</h2>
+        """ %( self.style,self.model) 
         for filename in ('config.txt', 'dataset.txt', 'converge.txt', 'summary_log.txt'):
             if not os.path.exists(filename): continue
             html += '<h4>%s</h4>\n<pre>%s</pre>' % (filename, open(filename).read())
         html += '\n</body>'
-        if not os.path.exists('plots/config'): os.makedirs('plots/config')
+        if not os.path.exists('plots/config'): os.makedirs('plots/config') #plots/config
         open('plots/config/index.html','w').write(html)
         print 'wrote plots/config/index.html'
         
@@ -99,7 +103,7 @@ a:hover { background-color:yellow; }
         t = self.ul.replace('plots/', '')
         open('plots/index.html', 'w').write(t)
         print 'wrote menu %s' %os.path.join(os.getcwd(), 'plots/index.html')
-
+    
     def update_top(self, filename='../plot_index.html'):
         def parse_path(x): 
             'return relative path, model name'

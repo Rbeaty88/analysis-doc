@@ -7,7 +7,8 @@ import numpy as np
 class Demo(analysis_base.AnalysisBase):
 
     def setup(self, **kw):
-        self.plotfolder='demo'
+        self.plotfolder='demo' 
+         
 
     def plot_1(self):
         """Test making a simple plot, with caption
@@ -21,7 +22,10 @@ class Demo(analysis_base.AnalysisBase):
 
     def text(self):
         """Some text
-        Yes! Some more text.
+        Yes!!!!! Some more text.
         """
+        
     def all_plots(self):
         self.runfigures([self.plot_1,self.text,])
+        
+
