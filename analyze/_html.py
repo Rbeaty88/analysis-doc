@@ -48,14 +48,7 @@ class HTMLindex():
 
 
 """
-#<link rel="stylesheet" type="text/css" href="%(needed_files)s\simpletree.css" /> I can place this in menu_header= and it actually works, unlike when placed in style=
-   
-    
-    #top_nav="""<html> <head> <title>Top Nav</title> %(style)s 
-   # <script> function load(){ parent.menu.location.href = '%(last_model)s';} </script>
-   # </head>
-#<body onload="load()">
-#<h3>skymodels/%(upper)s</h3>""" 
+ 
 
     def __init__(self, folder='plots/*'):
         self.style = HTMLindex.style
@@ -78,10 +71,13 @@ class HTMLindex():
             name = os.path.splitext(tail)[0]
             n = name.find('_uw')
             #note the special qualifier for use with the SLAC decorator
-            if x==v[0]:
-                return '<ul><li><a href="%s">%s</a></li>' % (x,name[:n]) #I need to add the forloop that makes it so the first iteration adds things differently than the others.
+            
+                    
+            if x==v[len(v)-1]:
+                return '<li><a href="%s">%s</a></li></ul></li>' % (x,name[:n])
             else:
                 return '<li><a href="%s">%s</a></li>' % (x,name[:n])
+ 
 
         for k in sorted(z.keys()):
             v = z[k]
@@ -89,18 +85,15 @@ class HTMLindex():
             index = '%s/index.html'% k
             if index in v:
                 v.remove(index)
-                s += '\n<h4><a href="%s?skipDecoration" target="content">%s</a></h4>'% k[6:]
-            else:    
-                if k==sorted(z.keys())[0]:
-                    s += '<li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a>'% k[6:] #this creates the plots\config and plots\demo respectively.
-                else:
-                    s += '</ul></li><li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a>'% k[6:]
-                
-            s += '\n\t' + '\n\t'.join(map(parse_item, v))  #'\n\t<p>' + '\n\t'.join(map(parse_item, v)) - this puts <p> next to hyperlinks.. this means that this is effecting some of it.
+                #s += '\n<h4><a href="%s?skipDecoration" target="content">%s</a></h4>'% 'hi',k[6:] #Why does this never get called?
+            else:
+                s += '<li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a><ul>'% k[6:]
+            
+            s += '\n\t' + '\n\t'.join(map(parse_item, v))  
             #pass
-        self.ul = s + '\n</ul></li></ul></li> <script type="text/javascript">  ddtreemenu.createTree("treemenu1", true) / ddtreemenu.createTree("treemenu2", false) </script> </body>' # s + '</p>\n</body>'
+        self.ul = s + '\n <script type="text/javascript">  ddtreemenu.createTree("treemenu1", true) / ddtreemenu.createTree("treemenu2", false) </script> </body>' # s + '</p>\n</body>'
         self.make_config_link()
-        
+        print s
     def _repr_html_(self):    
         return self.ul
     
