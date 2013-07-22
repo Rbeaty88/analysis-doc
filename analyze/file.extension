@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
     <link rel="logo" type="image/svg" href="https://github-media-downloads.s3.amazonaws.com/github-logo.svg" />
     <meta property="og:image" content="https://github.global.ssl.fastly.net/images/modules/logos_page/Octocat.png">
-    <meta name="hostname" content="fe4.rs.github.com">
+    <meta name="hostname" content="fe2.rs.github.com">
     <link rel="assets" href="https://github.global.ssl.fastly.net/">
     <link rel="xhr-socket" href="/_sockets" />
     
@@ -32,7 +32,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <meta content="authenticity_token" name="csrf-param" />
-<meta content="pimR8nXKs/h7+Vct0w+Sh+l1jhc3lYrG3VGOvigsdxs=" name="csrf-token" />
+<meta content="oRULRs8ahW/PchVWgQXwHG3qIDM169UbdOF4OTzYnxs=" name="csrf-token" />
 
     <link href="https://github.global.ssl.fastly.net/assets/github-8921d913c104b05dbca482140b50a4899d808da0.css" media="all" rel="stylesheet" type="text/css" />
     <link href="https://github.global.ssl.fastly.net/assets/github2-aa63a9702e1366e95f35d477257b39be940ff53c.css" media="all" rel="stylesheet" type="text/css" />
@@ -604,7 +604,7 @@
     </a>
 
     <ul class="site-footer-links">
-      <li>&copy; 2013 <span title="0.05603s from fe4.rs.github.com">GitHub</span>, Inc.</li>
+      <li>&copy; 2013 <span title="0.05789s from fe2.rs.github.com">GitHub</span>, Inc.</li>
         <li><a href="/site/terms">Terms</a></li>
         <li><a href="/site/privacy">Privacy</a></li>
         <li><a href="/security">Security</a></li>

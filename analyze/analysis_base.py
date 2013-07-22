@@ -11,6 +11,7 @@ from mpl_toolkits.axes_grid import axes_grid, axes_size, Divider, make_axes_loca
 from . import _html
 from . _html import HTMLindex
 
+
 class FloatFormat(): #simple formatting functor for to_html!
     def __init__(self, n): self.fmt = '%%.%df' % n
     def __call__(self, x): return self.fmt % x
@@ -80,6 +81,11 @@ class AnalysisBase(object):
             if not os.path.exists(self.plotfolder): os.makedirs(self.plotfolder)
         else:
             raise Exception('Subclass of AnalysisBase did not create a "plotfolder" variable')
+            
+        #create needed folder
+        if not os.path.exists('needed'):
+            os.mkdir('needed')
+            print 'created folder "needed"'
 
     def setup(self, **kwargs):
         assert False, 'Base class not implemented'
@@ -176,7 +182,7 @@ class AnalysisBase(object):
         if names is None:
             names=[None]*len(functions)
         title = self.skymodel +'-'+self.__class__.__name__
-        htmldoc = '<head>'+ _html.HTMLindex.style + '\n <title>%s</title>\n' % title
+        htmldoc = '<head>'+ _html.style + '\n <title>%s</title>\n' % title
         htmldoc +=' <script>document.title="%s"</script>\n</head>\n' % title # this to override SLAC Decorator
         htmldoc +='<body><h2>%(header)s</h2>'
  

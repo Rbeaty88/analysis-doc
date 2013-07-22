@@ -6,38 +6,39 @@ $Header:$
 import os, glob
 import pandas as pd
 
+style="""
+<style type="text/css">
+body, th, td {	font-family:verdana,arial,sans-serif;
+	font-size:10pt;
+	margin:10px;
+	background-color:white;
+	}
+p   { font-size:10pt; margin-left:25pt; }
+pre { font-size:10pt; margin-left:25pt; 
+    border-style:solid;
+    border-width:thin;}
+h3 { -webkit-margin-after: 0px; -webkit-margin-before: 2em; }
 
+h5 {margin-left:25pt;}
+table { margin-left:25pt; margin-top:15pt; font-size:8pt;
+    border-style: solid; border-width: 1px;  border-collapse: collapse; }
+table.topmenu {border-style:solid; border-width:0px}
+table, th, td { padding: 3px; }
+td {text-align:center;}
+td.index {text-align:left;}
+a:link { text-decoration: none ; color:green}
+a:hover { background-color:yellow; }
 
-class HTMLindex():
-    """ Manage the web browser pages
-    """
-    #Attempted to use %(needed_files)s under href for below, however if it is in style= then it does not grab from the function __init__ below.
-    style="""
-<script type="text/javascript" src="needed/simpletreemenu.js">
-
-/***********************************************
-* Simple Tree Menu- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
-* This notice MUST stay intact for legal use
-* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
-***********************************************/
-
-</script>
-
-<link rel="stylesheet" type="text/css" href="needed\simpletree.css" /> 
-
-</head>
-<body>
-
-"""
-#title is required for to define the document - used in search engines etc.
-
-#<script> function load(){ parent.content.location.href='%(model_summary)s';} </script>
-    #</head>
-    #<body onload="load()">
-    menu_header="""<!DOCTYPE html>
+</style>"""
+    
+    
+menu_header="""<!DOCTYPE html>
 <html> 
 <head> 
 <title>%(model)s index</title> %(style)s 
+<script type="text/javascript" src="needed/simpletreemenu.js"></script>
+<link rel="stylesheet" type="text/css" href="needed\simpletree.css" />
+</head>
     
 <h2><a href="%(upper_link)s">%(upper)s</a>%(model)s</h2> 
 
@@ -45,20 +46,34 @@ class HTMLindex():
 
 <ul id="treemenu1" class="treeview">
 
-
-
 """
-#<link rel="stylesheet" type="text/css" href="%(needed_files)s\simpletree.css" /> I can place this in menu_header= and it actually works, unlike when placed in style=
-   
+top_nav="""<html> <head> <title>Top Nav</title> %(style)s 
+    <script> function load(){ parent.menu.location.href = '%(last_model)s';} </script>
+    </head>
+<body onload="load()">
+<h3>skymodels/%(upper)s</h3>""" 
+
+
+
+
+
+
+class HTMLindex():
+    """ Manage the web browser pages
+    """
+    #Attempted to use %(needed_files)s under href for below, however if it is in style= then it does not grab from the function __init__ below.
+
+#title is required for to define the document - used in search engines etc.
+
+#<script> function load(){ parent.content.location.href='%(model_summary)s';} </script>
+    #</head>
+    #<body onload="load()">
     
-    #top_nav="""<html> <head> <title>Top Nav</title> %(style)s 
-   # <script> function load(){ parent.menu.location.href = '%(last_model)s';} </script>
-   # </head>
-#<body onload="load()">
-#<h3>skymodels/%(upper)s</h3>""" 
+   
+ 
 
     def __init__(self, folder='plots/*'):
-        self.style = HTMLindex.style
+        self.style = style#HTMLindex.style
     
         w= glob.glob(folder)
         if len(w)==0: 
@@ -70,7 +85,7 @@ class HTMLindex():
         self.model = w[-1] #'/'.join(w[-2:])
         self.model_summary='plots/config/index.html'
         self.needed_files='needed'
-        s= HTMLindex.menu_header % self.__dict__
+        s= menu_header % self.__dict__
        
         
         def parse_item(x): ##This functions make all the hyperlinks under plots\config, and plots\demo respectively.
@@ -78,10 +93,12 @@ class HTMLindex():
             name = os.path.splitext(tail)[0]
             n = name.find('_uw')
             #note the special qualifier for use with the SLAC decorator
-            if x==v[0]:
-                return '<ul><li><a href="%s">%s</a></li>' % (x,name[:n]) #I need to add the forloop that makes it so the first iteration adds things differently than the others.
+                  
+            if x==v[len(v)-1]:
+                return '<li><a href="%s">%s</a></li></ul></li>' % (x,name[:n])
             else:
                 return '<li><a href="%s">%s</a></li>' % (x,name[:n])
+ 
 
         for k in sorted(z.keys()):
             v = z[k]
@@ -89,18 +106,16 @@ class HTMLindex():
             index = '%s/index.html'% k
             if index in v:
                 v.remove(index)
-                s += '\n<h4><a href="%s?skipDecoration" target="content">%s</a></h4>'% k[6:]
-            else:    
-                if k==sorted(z.keys())[0]:
-                    s += '<li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a>'% k[6:] #this creates the plots\config and plots\demo respectively.
-                else:
-                    s += '</ul></li><li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a>'% k[6:]
-                
-            s += '\n\t' + '\n\t'.join(map(parse_item, v))  #'\n\t<p>' + '\n\t'.join(map(parse_item, v)) - this puts <p> next to hyperlinks.. this means that this is effecting some of it.
+                #s += '\n<h4><a href="%s?skipDecoration" target="content">%s</a></h4>'% 'hi',k[6:] #Why does this never get called?
+            else:
+                s += '<li><a href="javascript:void 0" onclick="TreeMenu.toggle(this)">%s</a><ul>'% k[6:]
+            
+            s += '\n\t' + '\n\t'.join(map(parse_item, v))  
             #pass
-        self.ul = s + '\n</ul></li></ul></li> <script type="text/javascript">  ddtreemenu.createTree("treemenu1", true) / ddtreemenu.createTree("treemenu2", false) </script> </body>' # s + '</p>\n</body>'
+        self.ul = s + '\n <script type="text/javascript">  ddtreemenu.createTree("treemenu1", true) / ddtreemenu.createTree("treemenu2", false) </script> </body>' # s + '</p>\n</body>'
         self.make_config_link()
-        
+        print s
+   
     def _repr_html_(self):    
         return self.ul
     
@@ -123,3 +138,29 @@ class HTMLindex():
         t = self.ul.replace('plots/', '')
         open('plots/index.html', 'w').write(t)
         print 'wrote menu %s' %os.path.join(os.getcwd(), 'plots/index.html')
+        
+    def update_top(self, filename='../plot_index.html'):
+        def parse_path(x): 
+            'return relative path, model name'
+            t = x.split(os.path.sep)
+            return  '/'.join(t[1:]) , t[1]
+        def parse_model(x):
+            return '<a href="%s?skipDecoration"> %s </a>' %(parse_path(x) )
+        def model_comment(x):
+            a,b=parse_path(x)
+            return eval(open('../'+b+'/config.txt').read()).get('comment', 'no comment')
+        
+        models = sorted(glob.glob('../*/plots/index.html'), reverse=True)
+        assert len(models)>0, 'No models found?'
+        self.last_model = parse_path(models[0])[0]
+        s = HTMLindex.top_nav % self.__dict__
+        s += '\n<table class="topmenu">'
+        for m in models:
+            s += '\n  <tr><td valign="top" class="index">%s</td>'% parse_model(m)
+            s += '\n      <td class="index"> %s </td></tr>' % model_comment(m)
+        s += '\n</table>\n</body></html>\n'
+        open(filename, 'w').write(s)
+        print 'wrote top menu %s' % os.path.join(os.getcwd(),filename)
+    @staticmethod
+    def head(title=''):
+        return '<head><title>%s</title>\n'+style+'</head>\n'
