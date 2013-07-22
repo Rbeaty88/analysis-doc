@@ -69,7 +69,19 @@ class HTMLindex():
     #</head>
     #<body onload="load()">
     
+<<<<<<< HEAD
    
+=======
+<h2><a href="%(upper_link)s">%(upper)s</a>%(model)s</h2> 
+
+<a href="javascript:ddtreemenu.flatten('treemenu1', 'expand')">Expand All</a> | <a href="javascript:ddtreemenu.flatten('treemenu1', 'contract')">Contract All</a>
+
+<ul id="treemenu1" class="treeview">
+
+
+
+"""
+>>>>>>> 0cd4d00aed76c3d22c85ef4c0bf7b0c80621b331
  
 
     def __init__(self, folder='plots/*'):
@@ -93,7 +105,12 @@ class HTMLindex():
             name = os.path.splitext(tail)[0]
             n = name.find('_uw')
             #note the special qualifier for use with the SLAC decorator
+<<<<<<< HEAD
                   
+=======
+            
+                    
+>>>>>>> 0cd4d00aed76c3d22c85ef4c0bf7b0c80621b331
             if x==v[len(v)-1]:
                 return '<li><a href="%s">%s</a></li></ul></li>' % (x,name[:n])
             else:
@@ -115,7 +132,10 @@ class HTMLindex():
         self.ul = s + '\n <script type="text/javascript">  ddtreemenu.createTree("treemenu1", true) / ddtreemenu.createTree("treemenu2", false) </script> </body>' # s + '</p>\n</body>'
         self.make_config_link()
         print s
+<<<<<<< HEAD
    
+=======
+>>>>>>> 0cd4d00aed76c3d22c85ef4c0bf7b0c80621b331
     def _repr_html_(self):    
         return self.ul
     
